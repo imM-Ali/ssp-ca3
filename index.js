@@ -33,3 +33,11 @@ app.get('/', function(req, res) {
         tagline: tagline
     });
 });
+app.get('/list', function(req, res) {
+
+
+    res.render('list', {
+
+        data: "list page"
+    });
+});
