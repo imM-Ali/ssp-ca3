@@ -14,6 +14,8 @@ app.use(bodyParser.json());
 app.use('/css', express.static(module.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(module.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(module.join(__dirname, 'node_modules/jquery/dist')))
+app.use(express.static('public'));
+app.use('/images', express.static('images'));
 
 
 app.listen(PORT, () => {
@@ -30,7 +32,7 @@ app.get('/', function(req, res) {
 
     res.render('index', {
 
-        tagline: tagline
+        directory: __dirname
     });
 });
 app.get('/list', function(req, res) {

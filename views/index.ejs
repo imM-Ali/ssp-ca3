@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+
+
 <html lang="en">
 
 <head>
@@ -10,14 +13,35 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <title></title>
 </head>
+<style>
+    nav {
+        background-color: yellow;
+        height: 9vh;
+        width: 100vw;
+    }
+    
+    img {
+        max-height: 10vh;
+    }
+    
+    .land {
+        background-image: url(../images/main_back.jpg);
+        height: 100vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100vw;
+        overflow: hidden
+    }
+</style>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-6" style="height: 100vh; background-color: yellow;">
-                <%= tagline %>
-            </div>
-            <div class="col-6" style="height: 100vh; background-color: red;">Yellow</div>
+
+    <div class="container p-0 m-0 w-100">
+        <nav>
+            <img src="images/logo.png">
+        </nav>
+        <div class="row land">
+
         </div>
 
     </div>
