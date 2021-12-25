@@ -6,6 +6,10 @@ import module from 'path';
 
 const __dirname = module.resolve();
 const app = express();
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
 const PORT = 4000;
 
 app.use(bodyParser.json());
@@ -28,18 +32,12 @@ app.set('view engine', 'ejs');
 // index page
 app.get('/', function(req, res) {
 
-    var tagline = "Ali";
-
     res.render('index', {
-
         directory: __dirname
     });
 });
-app.get('/list', function(req, res) {
+app.post('/login', function(req, res) {
 
-
-    res.render('list', {
-
-        data: "list page"
-    });
+    console.log(req.body.username)
+    res.render(__dirname + "/views/index.ejs")
 });
