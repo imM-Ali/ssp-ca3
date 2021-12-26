@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from 'body-parser';
 import module from 'path';
+import mysql from 'mysql';
 
 
 
@@ -11,6 +12,18 @@ app.use(bodyParser.urlencoded({
 }));
 
 const PORT = 4000;
+var db = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'admin123',
+        database: 'users'
+    }
+
+)
+db.connect();
+
+
+
 
 app.use(bodyParser.json());
 
@@ -33,11 +46,25 @@ app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
 
     res.render('index', {
-        directory: __dirname
+        directory: __dirname,
+        error: "nah"
     });
 });
 app.post('/login', function(req, res) {
 
-    console.log(req.body.username)
-    res.render(__dirname + "/views/index.ejs")
+    db.query("SELECT * FROM user WHERE userName='" + req.body.username + "' AND password='" + req.body.password + "' ", function(err, result) {
+        if (err) {
+            res.render("index", {
+                error: err.message
+            })
+        }
+        res.render("index", {
+            error: "none",
+            user: result[0].userName
+        })
+
+    })
+
+
+
 });
