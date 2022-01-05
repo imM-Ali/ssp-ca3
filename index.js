@@ -46,6 +46,8 @@ app.set('view engine', 'ejs');
 app.get('/', function(req, res) {
 
     res.render('index', {
+        user: "none",
+        userType: 2,
         directory: __dirname,
         error: "nah"
     });
@@ -58,10 +60,18 @@ app.post('/login', function(req, res) {
                 error: err.message
             })
         }
-        res.render("index", {
-            error: "none",
-            user: result[0].userName
-        })
+        if (result.length > 0) {
+            res.render("index", {
+                error: "none",
+                user: result[0].userName,
+                userType: result[0].userType
+            })
+        } else {
+            res.render("index", {
+                user: "none"
+            })
+        }
+
 
     })
 
