@@ -52,7 +52,8 @@ app.get('/', function(req, res) {
         error: "nah"
     });
 });
-app.post('/login', function(req, res) {
+app.post('/Requestinglogin', function(req, res) {
+
 
     db.query("SELECT * FROM user WHERE userName='" + req.body.username + "' AND password='" + req.body.password + "' ", function(err, result) {
         if (err) {
@@ -60,12 +61,21 @@ app.post('/login', function(req, res) {
                 error: err.message
             })
         }
+
         if (result.length > 0) {
-            res.render("index", {
-                error: "none",
-                user: result[0].userName,
-                userType: result[0].userType
+            db.query("SELECT * FROM user", function(err, innerRes) {
+                var results = JSON.parse(JSON.stringify(innerRes))
+                res.render("index", {
+                    error: "none",
+                    user: result[0].userName,
+                    userType: result[0].userType,
+                    'dbUsers': results
+
+                })
+                console.log(results)
             })
+
+
         } else {
             res.render("index", {
                 user: "none"
