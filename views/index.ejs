@@ -15,7 +15,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
 
     <title>SSP CA</title>
@@ -77,89 +77,98 @@
             <div class="col-8 content">
                 <div class="wrap">
                     <div id="contentwrap">
-                    <form id="mainForm" action="/welcome" method="POST">
-                        <% if(locals.user=="none" ){ %>
-                            <span id="loginTitle"><strong>Log in</strong></span>
-                            <div class="input-group mt-5">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                        <path fill-rule="evenodd"
-                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                                    </svg></span>
-                                <input type="text" name="username" class="form-control" placeholder="Username" required>
-                            </div>
+                        <form id="mainForm" action="/welcome" method="POST">
+                            <% if(locals.user=="none" ){ %>
+                                <span id="loginTitle"><strong>Log in</strong></span>
+                                <div class="input-group mt-5">
+                                    <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                            height="16" fill="currentColor" class="bi bi-person-circle"
+                                            viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                            <path fill-rule="evenodd"
+                                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                        </svg></span>
+                                    <input type="text" name="username" class="form-control" placeholder="Username"
+                                        required>
+                                </div>
 
 
-                            <div class="input-group mt-3">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
-                                        <path
-                                            d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
-                                    </svg></span>
-                                <input type="password" name="password" class="form-control" placeholder="Password"
-                                    required>
-                            </div>
-                            <button id="loginBtn" class="btn btn-primary mt-4" type="submit">Log in</button>
-                            
-                            <% } else { %>
-                                <span id="loginTitle"><strong>Welcome! How are you today <%=user%> ?</strong></span>
-                                <% if(locals.userType==1){ %>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">First</th>
-                                                <th scope="col">Last</th>
-                                                <th scope="col">Username</th>
-                                                <th scope="col">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% for(var i=0; i < dbUsers.length; i++) { %>
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                            height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                                        </svg></span>
+                                    <input type="password" name="password" title="
+                                At least 1 Uppercase
+                                At least 1 Lowercase
+                                At least 1 Number
+                                At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
+                                Min 8 chars and Max 12 chars" class="form-control" placeholder="Password"
+                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                                        required>
+                                </div>
+                                <button id="loginBtn" class="btn btn-primary mt-4" type="submit">Log in</button>
+
+                                <% } else { %>
+                                    <span id="loginTitle"><strong>Welcome! How are you today <%=user%> ?</strong></span>
+                                    <% if(locals.userType==1){ %>
+                                        <table class="table">
+                                            <thead>
                                                 <tr>
-                                                    <td id="userid">
-                                                        <%= dbUsers[i].Id %>
-                                                    </td>
-                                                    <td>
-                                                        <%= dbUsers[i].first_Name %>
-                                                    </td>
-                                                    <td>
-                                                        <%= dbUsers[i].last_Name %>
-                                                    </td>
-                                                    <td>
-                                                        <%= dbUsers[i].userName %>
-                                                    </td>
-                                                    <td>
-
-                                                        <button type="button" name="editBtn"
-                                                            id="editBtn_<%=dbUsers[i].Id%>"
-                                                            class="btn btn-success fas fa-edit"></button>
-                                                        <button type="button" name="deleteBtn"
-                                                            id="deleteBtn_<%=dbUsers[i].Id%>"
-                                                            class="btn btn-danger far fa-trash-alt"></button>
-                                                    </td>
+                                                    <th scope="col">Id</th>
+                                                    <th scope="col">First</th>
+                                                    <th scope="col">Last</th>
+                                                    <th scope="col">Username</th>
+                                                    <th scope="col">Actions</th>
                                                 </tr>
-                                                <% } %>
-                                        </tbody>
-                                    </table>
-                                    <button type="button" id="logoutBtn" class="btn btn-secondary">Log out</button>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var i=0; i < dbUsers.length; i++) { %>
+                                                    <tr>
+                                                        <td id="userid">
+                                                            <%= dbUsers[i].Id %>
+                                                        </td>
+                                                        <td>
+                                                            <%= dbUsers[i].first_Name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= dbUsers[i].last_Name %>
+                                                        </td>
+                                                        <td>
+                                                            <%= dbUsers[i].userName %>
+                                                        </td>
+                                                        <td>
+
+                                                            <button type="button" name="editBtn"
+                                                                id="editBtn_<%=dbUsers[i].Id%>"
+                                                                class="btn btn-success fas fa-edit"></button>
+                                                            <button type="button" name="deleteBtn"
+                                                                id="deleteBtn_<%=dbUsers[i].Id%>"
+                                                                class="btn btn-danger far fa-trash-alt"></button>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                        <button type="button" id="logoutBtn" class="btn btn-secondary">Log out</button>
 
 
-                                    <% } else { %>
-                                        //do something if normal user
-                                        <% } %>
-
-
-
-
+                                        <% } else { %>
+                                            //do something if normal user
                                             <% } %>
 
 
 
-                    </form>
-                </div>
-                    <button style="display: <%=signupBtnVisibility %>" id="signupBtn" class="btn btn-primary mt-4 ml-2">Sign up</button>
+
+                                                <% } %>
+
+
+
+                        </form>
+                    </div>
+                    <button style="display: <%=signupBtnVisibility %>" id="signupBtn"
+                        class="btn btn-primary mt-4 ml-2">Sign up</button>
 
                 </div>
 
@@ -183,8 +192,8 @@
 <script>
 
     $(document).ready(function () {
-        
-        
+
+
 
 
 
@@ -283,23 +292,23 @@
             })
         })
         var el = document.getElementById('logoutBtn');
-        if(el != null){
+        if (el != null) {
             el.addEventListener('click', (e) => {
-            e.preventDefault();
-            $.ajax({
+                e.preventDefault();
+                $.ajax({
 
-                url: "http://localhost:4000/",
-                type: "GET",
-                success: function (result) {
-                    window.location.replace("/")
-                }
+                    url: "http://localhost:4000/",
+                    type: "GET",
+                    success: function (result) {
+                        window.location.replace("/")
+                    }
+                })
             })
-        })       
 
         }
 
-        document.getElementById('signupBtn').addEventListener('click', (e)=>{
-                     
+        document.getElementById('signupBtn').addEventListener('click', (e) => {
+
             document.getElementById('mainForm').innerHTML = "";
             $("#contentwrap").html(`           
             <span id="loginTitle"><strong>Sign up</strong></span>
@@ -328,38 +337,38 @@
                             
                                                      
                             `)
-            
-
-                            e.target.id = "signupnow";
-
-                            document.getElementById('signupnow').addEventListener('click',(e)=>{
-                                e.preventDefault();
-                               console.log($('#_FirstName').val())
-                                $.ajax({
-                            url: `http://localhost:4000/signup`,
-                            type: "POST",                            
-                            data: {
-                                
-                                'username': $('#_username').val(),
-                                'firstName': $('#_firstName').val(),
-                                'lastName': $('#_lastName').val(),
-                                'password': $('#_password').val()
-
-                            },
-                            success: function (result) {
-
-                                document.getElementById('editTbl').innerHTML = result + " Reloading now";
-                                setTimeout(() => window.location.replace('/'), 1800);
-                            }
-                        })
 
 
+            e.target.id = "signupnow";
+
+            document.getElementById('signupnow').addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log($('#_FirstName').val())
+                $.ajax({
+                    url: `http://localhost:4000/signup`,
+                    type: "POST",
+                    data: {
+
+                        'username': $('#_username').val(),
+                        'firstName': $('#_firstName').val(),
+                        'lastName': $('#_lastName').val(),
+                        'password': $('#_password').val()
+
+                    },
+                    success: function (result) {
+
+                        document.getElementById('editTbl').innerHTML = result + " Reloading now";
+                        setTimeout(() => window.location.replace('/'), 1800);
+                    }
+                })
 
 
 
 
 
-                            })
+
+
+            })
 
 
 

@@ -80,6 +80,7 @@ app.post('/welcome', function (req, res) {
                     error: "none",
                     user: result[0].userName,
                     userType: result[0].userType,
+                    userId: result[0].Id,
                     'dbUsers': results,
                     'signupBtnVisibility': "none"
                 })
@@ -156,18 +157,18 @@ app.delete('/delete/(:id)', function (req, res) {
 
 })
 
-app.post('/signup', function(req,res){
-    
-    db.query(`INSERT INTO user (userType, first_Name, last_Name, userName, password) VALUES ('2', '${req.body.firstName}', '${req.body.lastName}', '${req.body.username}', '${req.body.password}')`, function(e){
-if(e){
-    res.send("Sorry we could not add you at this time, try again later")
-}else{
-    res.send("Welcolme to our group")
-}
+app.post('/signup', function (req, res) {
+
+    db.query(`INSERT INTO user (userType, first_Name, last_Name, userName, password) VALUES ('2', '${req.body.firstName}', '${req.body.lastName}', '${req.body.username}', '${req.body.password}')`, function (e) {
+        if (e) {
+            res.send("Sorry we could not add you at this time, try again later")
+        } else {
+            res.send("Welcome to our group")
+        }
 
 
-    } );
-    
+    });
+
 
 })
 
