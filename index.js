@@ -35,7 +35,7 @@ db.connect();
 
 app.use(bodyParser.json());
 
-
+//serves static files to the node server
 app.use('/css', express.static(module.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(module.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(module.join(__dirname, 'node_modules/jquery/dist')))
@@ -53,7 +53,7 @@ app.set('view engine', 'ejs');
 // landing - login page
 app.get('/', function(req, res) {
 
-
+    //setting the current user to none and sending that information to the view, I will check this user variable for value in the view
     res.render('index', {
         user: "none",
         //
@@ -108,7 +108,7 @@ app.post('/welcome', function(req, res) {
 
 });
 
-//get one user based on ID for filling edit form
+//get one user based on ID which is sent from the view in the URI parameters
 app.get('/edit/(:id)', function(req, res) {
 
     let foundId = req.params.id;
@@ -116,7 +116,7 @@ app.get('/edit/(:id)', function(req, res) {
         if (err) throw err
 
         else {
-            //sending matching user without rendering the whole page
+            //returning matching user without rendering the whole page
             res.send({
                 user: rows[0].userName,
                 Id: foundId,
@@ -146,7 +146,7 @@ app.post('/edit/(:id)', function(req, res) {
 
 
     })
-    //gets the id to be deleted in the parameters
+    //gets the id to be deleted in the parameters and runs the query to delete it from mysql
 app.delete('/delete/(:id)', function(req, res) {
 
         db.query(`DELETE FROM user WHERE Id = ${req.params.id}`, function(error) {
@@ -163,6 +163,8 @@ app.delete('/delete/(:id)', function(req, res) {
     })
     //writes the signed up user to mySQl aswell as local JSON FILE
 app.post('/signup', function(req, res) {
+    //creating a JSON object with values returned from the view to be stored in the local JSON, whereas
+    //also storing all that to mysql aswell
     let data = [{
         Id: uniqueId++,
         userType: '2',
