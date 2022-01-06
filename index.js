@@ -13,6 +13,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 const PORT = 4000;
+
+//please change the connection properties to your local settings
+//mysql needed to be downgraded in order to work with node.js
+//      https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
 var db = mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -57,7 +61,7 @@ app.get('/', function(req, res) {
 //login 
 app.post('/welcome', function(req, res) {
 
-
+    //gets matching record from database based on variables sent with the request
     db.query("SELECT * FROM user WHERE userName='" + req.body.username + "' AND password='" + req.body.password + "' ", function(err, result) {
         if (err) {
             res.render("index", {
@@ -66,9 +70,11 @@ app.post('/welcome', function(req, res) {
         }
 
         if (result.length > 0) {
+            //getting all users
             db.query("SELECT * FROM user", function(err, innerRes) {
                 var results = JSON.parse(JSON.stringify(innerRes))
                 res.render("index", {
+                    //sending current user and an array of all the users
                     error: "none",
                     user: result[0].userName,
                     userType: result[0].userType,
@@ -91,8 +97,8 @@ app.post('/welcome', function(req, res) {
 
 
 });
-//get all
 
+//get one user based on ID for filling edit form
 app.get('/edit/(:id)',function(req, res) {
    
    let foundId = req.params.id;   
@@ -111,6 +117,7 @@ app.get('/edit/(:id)',function(req, res) {
     })
 })
 
+//save one user from the edit form
 app.post('/edit/(:id)', function(req, res) {
    
     var isadmin;    
@@ -129,4 +136,17 @@ app.post('/edit/(:id)', function(req, res) {
    });
    
     
+})
+
+app.delete('/delete/(:id)', function(req,res){
+   
+    db.query(`DELETE FROM user WHERE Id = ${req.params.id}`, function (error){
+        if(error){
+            console.log(error.message)
+            res.send("Oops, something went wrong, please try again!")
+        }
+        else{
+            res.send("Deleted Successfully!")
+        }
+       });
 })
