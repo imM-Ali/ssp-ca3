@@ -14,7 +14,9 @@
         integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <title></title>
+
+
+    <title>SSP CA</title>
 </head>
 <style>
     body {
@@ -36,6 +38,14 @@
 
     .content {
         height: 60vh;
+        background-color: white;
+        opacity: 0.7;
+        border-radius: 15px;
+        text-align: center;
+    }
+    #editTbl{
+        margin: auto;
+        max-width: 30vw;
         background-color: white;
         opacity: 0.7;
         border-radius: 15px;
@@ -63,7 +73,7 @@
             </div>
             <div class="col-8 content">
                 <div class="wrap">
-                    <form action="/Requestinglogin" method="POST">
+                    <form action="/welcome" method="POST">
                         <% if(locals.user=="none" ){ %>
                             <span id="loginTitle"><strong>Log in</strong></span>
                             <div class="input-group mt-5">
@@ -118,8 +128,10 @@
                                                     </td>
                                                     <td>
 
-                                                        <a type="button" id="editBtn_<%=dbUsers[i].Id%>" href="edit/<%=dbUsers[i].Id%>"
-                                                            class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                                        <button type="button" data-toggle="modal"
+                                                            data-target="#exampleModal" name="editBtn"
+                                                            id="editBtn_<%=dbUsers[i].Id%>"
+                                                            class="btn btn-success fas fa-edit"></button>
                                                         <button type="button" class="btn btn-danger"><i
                                                                 class="far fa-trash-alt"></i></button>
                                                     </td>
@@ -127,6 +139,9 @@
                                                 <% } %>
                                         </tbody>
                                     </table>
+                                    
+                                   
+
                                     <% } else { %>
                                         //do something if normal user
                                         <% } %>
@@ -145,6 +160,11 @@
 
             </div>
         </div>
+        <div class="row">
+            <div id="editTbl" class="col-8 mt-5">
+
+            </div> 
+        </div>
         <div class="col-2">
 
         </div>
@@ -153,25 +173,147 @@
 
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-    crossorigin="anonymous"></script>
 <script>
-    var selUser = document.getElementById('userid').innerText.split('_', 1, 0);
-    var el = document.getElementById('editBtn');
-    el.addEventListener('click', function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: "http://localhost:4000/edit/"+seluser,
-            type: "GET",
-            dataType: 'text',
-            success: function (result) {
-               //display json data in modal now
-            }
+
+    $(document).ready(function () {
+
+        var el = document.getElementsByName("editBtn");
+        el.forEach(element => {
+            element.addEventListener('click', function (e) {
+                $.ajax({
+                    url: "http://localhost:4000/edit/" + e.target.id.split('_')[1],
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (result) {
+
+
+                        var tbd = `<form  class="mt-2 mb-2">
+                        
+                            <span id="loginTitle"><strong>Edit</strong></span>
+                            <div class="input-group mt-5">
+                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    </svg></span>
+                                <input type="text" value="${result.user}" id="username" class="form-control" placeholder="Username" required>
+                            </div>
+
+                                <span style="display:none" id="userId">${result.Id}</span>
+                            
+
+                            <div class="input-group mt-5">
+                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    </svg></span>
+                                <input type="text" value="${result.firstName}" id="firstName" class="form-control" placeholder="First Name" required>
+                            </div>
+
+                            <div class="input-group mt-5">
+                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    </svg></span>
+                                <input type="text" value="${result.lastName}" id="lastName" class="form-control" placeholder="Last Name" required>
+                            </div>
+                            <div class="input-group mt-5">
+                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    </svg></span>
+                                <input type="text" value="" id="isAdmin" class="form-control" placeholder="Make Admin? Yes/No" required>
+                            </div>
+                            <button id="submitbtn2" class="btn btn-primary mt-4" type="submit">Save</button>
+
+                            
+                    </form>`
+
+                    document.getElementById('editTbl').innerHTML = tbd;
+
+                        
+
+
+                    }
+                   
+                }).done(function(e){
+                    document.getElementById("submitbtn2").addEventListener('click',function(e){                        
+            
+            e.preventDefault();
+            $.ajax({
+                    url: `http://localhost:4000/edit/${document.getElementById('userId').innerText}`,                   
+                    type: "POST",
+                    data: {
+                        'id' : document.getElementById('userId').innerText,
+                        'username' : $('#username').val(),
+                        'firstName' : $('#firstName').val(),
+                        'lastName' : $('#lastName').val(),
+                        'isAdmin' : $('#isAdmin').val()
+
+                    },                    
+                    success: function (result){
+
+                        document.getElementById('editTbl').innerHTML = result + " Reloading now";
+                        setTimeout(() => window.location.reload(), 1800);
+                    }
+            })
+        })
+                })
+
+                
+            })
         });
+       
+
+
+
+
+
+
 
 
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
+
 
 </html>

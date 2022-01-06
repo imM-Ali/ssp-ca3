@@ -55,7 +55,7 @@ app.get('/', function(req, res) {
 });
 
 //login 
-app.post('/Requestinglogin', function(req, res) {
+app.post('/welcome', function(req, res) {
 
 
     db.query("SELECT * FROM user WHERE userName='" + req.body.username + "' AND password='" + req.body.password + "' ", function(err, result) {
@@ -91,23 +91,42 @@ app.post('/Requestinglogin', function(req, res) {
 
 
 });
+//get all
 
 app.get('/edit/(:id)',function(req, res) {
    
-   let foundId = req.params.id;
-   console.log("oh"+foundId)
+   let foundId = req.params.id;   
     db.query('SELECT * FROM user WHERE Id = ' + foundId, function(err, rows, fields) {
         if(err) throw err       
         // if book found
         else {
-            res.json({
+           
+              res.send({
                 user: rows[0].userName,
                 Id: foundId,
                 firstName: rows[0].first_Name,
                 lastName: rows[0].last_Name
-              });
-            
-
+              })
         }
     })
+})
+
+app.post('/edit/(:id)', function(req, res) {
+   
+    var isadmin;    
+    if(req.body.isAdmin=="yes"){
+        isadmin = 1;
+    }else{
+        isadmin = 2;
+    }
+   db.query(`UPDATE user SET userType = '${isadmin}', first_Name = '${req.body.firstName}', last_Name = '${req.body.lastName}', userName = '${req.body.username}' WHERE Id = ${req.body.id}`, function (error){
+    if(error){
+        res.send("Oops, something went wrong, please try again!")
+    }
+    else{
+        res.send("Saved Successfully!")
+    }
+   });
+   
+    
 })
