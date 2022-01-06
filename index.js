@@ -5,6 +5,7 @@ import mysql from 'mysql';
 
 
 
+
 const __dirname = module.resolve();
 const app = express();
 app.use(bodyParser.urlencoded({
@@ -42,7 +43,7 @@ app.set('view engine', 'ejs');
 
 // use res.render to load up an ejs view file
 
-// index page
+// login page
 app.get('/', function(req, res) {
 
     res.render('index', {
@@ -52,6 +53,8 @@ app.get('/', function(req, res) {
         error: "nah"
     });
 });
+
+//login 
 app.post('/Requestinglogin', function(req, res) {
 
 
@@ -72,7 +75,7 @@ app.post('/Requestinglogin', function(req, res) {
                     'dbUsers': results
 
                 })
-                console.log(results)
+                
             })
 
 
@@ -88,3 +91,23 @@ app.post('/Requestinglogin', function(req, res) {
 
 
 });
+
+app.get('/edit/(:id)',function(req, res) {
+   
+   let foundId = req.params.id;
+   console.log("oh"+foundId)
+    db.query('SELECT * FROM user WHERE Id = ' + foundId, function(err, rows, fields) {
+        if(err) throw err       
+        // if book found
+        else {
+            res.json({
+                user: rows[0].userName,
+                Id: foundId,
+                firstName: rows[0].first_Name,
+                lastName: rows[0].last_Name
+              });
+            
+
+        }
+    })
+})
