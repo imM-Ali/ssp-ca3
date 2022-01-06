@@ -10,9 +10,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
@@ -27,17 +26,17 @@
         background-size: cover;
         background-repeat: no-repeat;
     }
-
+    
     nav {
         background-color: transparent;
         height: 9vh;
         width: 100vw;
     }
-
+    
     img {
         max-height: 10vh;
     }
-
+    
     .content {
         height: 60vh;
         background-color: white;
@@ -45,7 +44,7 @@
         border-radius: 15px;
         text-align: center;
     }
-
+    
     #editTbl {
         margin: auto;
         max-width: 30vw;
@@ -54,19 +53,19 @@
         border-radius: 15px;
         text-align: center;
     }
-
+    
     .wrap {
-        margin-top: 15%;
+        margin-top: 40px;
     }
-
-   .row{
-       width: 100vw;
-   }
-
-   #contentwrap{
-       max-width: 55%;
-       margin: auto;
-   }
+    
+    .row {
+        width: 100vw;
+    }
+    
+    #contentwrap {
+        max-width: 55%;
+        margin: auto;
+    }
 </style>
 
 <body>
@@ -75,8 +74,8 @@
         <nav>
             <img src="images/logo.png">
         </nav>
-        <div class="row mt-5">           
-            
+        <div class="row mt-5">
+
             <div class="col content">
                 <div class="wrap">
                     <div id="contentwrap">
@@ -92,8 +91,7 @@
                                             <path fill-rule="evenodd"
                                                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                                         </svg></span>
-                                    <input type="text" name="username" class="form-control" placeholder="Username"
-                                        required>
+                                    <input type="text" name="username" class="form-control" placeholder="Username" required>
                                 </div>
 
 
@@ -108,9 +106,7 @@
                                 At least 1 Lowercase
                                 At least 1 Number
                                 At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
-                                Min 8 chars and Max 12 chars" class="form-control" placeholder="Password"
-                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
-                                        required>
+                                Min 8 chars and Max 12 chars" class="form-control" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" required>
                                 </div>
                                 <button id="loginBtn" class="btn btn-primary mt-4" type="submit">Log in</button>
                                 <!--Once a user value is passed by the server, the following is displayed-->
@@ -146,12 +142,8 @@
                                                         </td>
                                                         <td>
 
-                                                            <button type="button" name="editBtn"
-                                                                id="editBtn_<%=dbUsers[i].Id%>"
-                                                                class="btn btn-success fas fa-edit"></button>
-                                                            <button type="button" name="deleteBtn"
-                                                                id="deleteBtn_<%=dbUsers[i].Id%>"
-                                                                class="btn btn-danger far fa-trash-alt"></button>
+                                                            <button type="button" name="editBtn" id="editBtn_<%=dbUsers[i].Id%>" class="btn btn-success fas fa-edit"></button>
+                                                            <button type="button" name="deleteBtn" id="deleteBtn_<%=dbUsers[i].Id%>" class="btn btn-danger far fa-trash-alt"></button>
                                                         </td>
                                                     </tr>
                                                     <% } %>
@@ -162,7 +154,7 @@
                                         <!--If it is a non-privilidged user, he can only see the users list, he cannot edit or delete them-->
                                         <% } else { %>
 
-                                            <div class="row">                                                
+                                            <div class="row">
                                                 <div class="col-12">
                                                     <table class="table">
                                                         <thead>
@@ -171,7 +163,7 @@
                                                                 <th scope="col">First</th>
                                                                 <th scope="col">Last</th>
                                                                 <th scope="col">Username</th>
-                                                               
+
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -190,7 +182,7 @@
                                                                     <td>
                                                                         <%= jsUsers[i].userName %>
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                                 <% } %>
                                                         </tbody>
@@ -201,7 +193,7 @@
                                             </div>
 
 
-                                            
+
                                             <% } %>
 
 
@@ -213,8 +205,7 @@
 
                         </form>
                     </div>
-                    <button style=`display: < %=signupBtnVisibility %>` id="signupBtn"
-                        class="btn btn-primary mt-4 ml-2">Sign up</button>
+                    <button style="display: <%=signupBtnVisibility%>" id="signupBtn" class="btn btn-primary mt-4 ml-2">Sign up</button>
 
                 </div>
 
@@ -226,7 +217,7 @@
 
             </div>
         </div>
-        
+
 
     </div>
 
@@ -235,18 +226,17 @@
 
 
 <script>
-
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         var el = document.getElementsByName("editBtn");
         el.forEach(element => {
             //when the edit button is clicked, we will send ajax request to node to get results, then display in the empty div we had before
-            element.addEventListener('click', function (e) {
+            element.addEventListener('click', function(e) {
                 $.ajax({
                     url: "http://localhost:4000/edit/" + e.target.id.split('_')[1],
                     type: "GET",
                     dataType: 'json',
-                    success: function (result) {
+                    success: function(result) {
 
                         //the get request was sent to the router to get the saved values and place them as placeholders
                         var tbd = `<form  class="mt-2 mb-2">
@@ -285,8 +275,8 @@
 
                     }
 
-                }).done(function (e) {
-                    document.getElementById("submitbtn2").addEventListener('click', function (e) {
+                }).done(function(e) {
+                    document.getElementById("submitbtn2").addEventListener('click', function(e) {
                         //when the submit button is pressed, an ajax POST request goes to the server with all the data binded to its body
                         e.preventDefault();
                         $.ajax({
@@ -300,7 +290,7 @@
                                 'isAdmin': $('#isAdmin').val()
 
                             },
-                            success: function (result) {
+                            success: function(result) {
                                 //as soon as the server handles everything successfully, page reloads to display the new changes
                                 document.getElementById('editTbl').innerHTML = result + " Reloading now";
                                 setTimeout(() => window.location.reload(), 1800);
@@ -314,12 +304,12 @@
         });
         var el = document.getElementsByName("deleteBtn");
         el.forEach(element => {
-            element.addEventListener('click', function (e) {
+            element.addEventListener('click', function(e) {
                 console.log(e)
                 $.ajax({
                     url: "http://localhost:4000/delete/" + e.target.id.split('_')[1],
                     type: "DELETE",
-                    success: function (result) {
+                    success: function(result) {
                         document.getElementById('editTbl').innerHTML = result + " Reloading now";
                         setTimeout(() => window.location.reload(), 1800);
                     }
@@ -334,14 +324,14 @@
 
                     url: "http://localhost:4000/",
                     type: "GET",
-                    success: function (result) {
+                    success: function(result) {
                         window.location.replace("/")
                     }
                 })
             })
 
         }
-// when the signup button is pressed, the main form dissappears as it is a single page application, and the html transforms to a new form
+        // when the signup button is pressed, the main form dissappears as it is a single page application, and the html transforms to a new form
         document.getElementById('signupBtn').addEventListener('click', (e) => {
 
             document.getElementById('mainForm').innerHTML = "";
@@ -355,7 +345,7 @@
 
                             <div class="input-group mt-3">
                                 
-                                <input type="password" id="_password" class="form-control" placeholder="Password"
+                                <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" id="_password" class="form-control" placeholder="Password"
                                     required>
                             </div>
                             
@@ -373,11 +363,11 @@
                                                      
                             `)
 
-//using the same button for different purpose by changing its ID
+            //using the same button for different purpose by changing its ID
             e.target.id = "signupnow";
-//sends a POST request to the signup route with the data filled by the user
+            //sends a POST request to the signup route with the data filled by the user
             document.getElementById('signupnow').addEventListener('click', (e) => {
-                e.preventDefault();                
+                e.preventDefault();
                 $.ajax({
                     url: `http://localhost:4000/signup`,
                     type: "POST",
@@ -389,7 +379,7 @@
                         'password': $('#_password').val()
 
                     },
-                    success: function (result) {
+                    success: function(result) {
 
                         document.getElementById('editTbl').innerHTML = result + " Reloading now";
                         setTimeout(() => window.location.replace('/'), 1800);
@@ -418,36 +408,6 @@
 
 
     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 
