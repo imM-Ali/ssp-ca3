@@ -14,6 +14,8 @@
         integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
 
     <title>SSP CA</title>
@@ -43,7 +45,8 @@
         border-radius: 15px;
         text-align: center;
     }
-    #editTbl{
+
+    #editTbl {
         margin: auto;
         max-width: 30vw;
         background-color: white;
@@ -73,7 +76,8 @@
             </div>
             <div class="col-8 content">
                 <div class="wrap">
-                    <form action="/welcome" method="POST">
+                    <div id="contentwrap">
+                    <form id="mainForm" action="/welcome" method="POST">
                         <% if(locals.user=="none" ){ %>
                             <span id="loginTitle"><strong>Log in</strong></span>
                             <div class="input-group mt-5">
@@ -96,8 +100,8 @@
                                 <input type="password" name="password" class="form-control" placeholder="Password"
                                     required>
                             </div>
-                            <button id="submitbtn" class="btn btn-primary mt-4" type="submit">Log in</button>
-
+                            <button id="loginBtn" class="btn btn-primary mt-4" type="submit">Log in</button>
+                            
                             <% } else { %>
                                 <span id="loginTitle"><strong>Welcome! How are you today <%=user%> ?</strong></span>
                                 <% if(locals.userType==1){ %>
@@ -128,17 +132,19 @@
                                                     </td>
                                                     <td>
 
-                                                        <button type="button"  name="editBtn"
+                                                        <button type="button" name="editBtn"
                                                             id="editBtn_<%=dbUsers[i].Id%>"
                                                             class="btn btn-success fas fa-edit"></button>
-                                                        <button type="button" name="deleteBtn" id="deleteBtn_<%=dbUsers[i].Id%>" class="btn btn-danger far fa-trash-alt"></button>
+                                                        <button type="button" name="deleteBtn"
+                                                            id="deleteBtn_<%=dbUsers[i].Id%>"
+                                                            class="btn btn-danger far fa-trash-alt"></button>
                                                     </td>
                                                 </tr>
                                                 <% } %>
                                         </tbody>
                                     </table>
-                                    
-                                   
+                                    <button type="button" id="logoutBtn" class="btn btn-secondary">Log out</button>
+
 
                                     <% } else { %>
                                         //do something if normal user
@@ -152,7 +158,8 @@
 
 
                     </form>
-
+                </div>
+                    <button style="display: <%=signupBtnVisibility %>" id="signupBtn" class="btn btn-primary mt-4 ml-2">Sign up</button>
 
                 </div>
 
@@ -161,7 +168,7 @@
         <div class="row">
             <div id="editTbl" class="col-8 mt-5">
 
-            </div> 
+            </div>
         </div>
         <div class="col-2">
 
@@ -171,12 +178,22 @@
 
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
 
 <script>
 
     $(document).ready(function () {
+        
+        
+
+
+
+
+
+
+
+
+
 
         var el = document.getElementsByName("editBtn");
         el.forEach(element => {
@@ -192,12 +209,7 @@
                         
                             <span id="loginTitle"><strong>Edit</strong></span>
                             <div class="input-group mt-5">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                        <path fill-rule="evenodd"
-                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                                    </svg></span>
+                                
                                 <input type="text" value="${result.user}" id="username" class="form-control" placeholder="Username" required>
                             </div>
 
@@ -205,31 +217,16 @@
                             
 
                             <div class="input-group mt-5">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                        <path fill-rule="evenodd"
-                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                                    </svg></span>
+                                
                                 <input type="text" value="${result.firstName}" id="firstName" class="form-control" placeholder="First Name" required>
                             </div>
 
                             <div class="input-group mt-5">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                        <path fill-rule="evenodd"
-                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                                    </svg></span>
+                                
                                 <input type="text" value="${result.lastName}" id="lastName" class="form-control" placeholder="Last Name" required>
                             </div>
                             <div class="input-group mt-5">
-                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                        height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                        <path fill-rule="evenodd"
-                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                                    </svg></span>
+                                
                                 <input type="text" value="" id="isAdmin" class="form-control" placeholder="Make Admin? Yes/No" required>
                             </div>
                             <button id="submitbtn2" class="btn btn-primary mt-4" type="submit">Save</button>
@@ -237,38 +234,38 @@
                             
                     </form>`
 
-                    document.getElementById('editTbl').innerHTML = tbd;
+                        document.getElementById('editTbl').innerHTML = tbd;
 
-                        
+
 
 
                     }
-                   
-                }).done(function(e){
-                    document.getElementById("submitbtn2").addEventListener('click',function(e){                        
-            
-            e.preventDefault();
-            $.ajax({
-                    url: `http://localhost:4000/edit/${document.getElementById('userId').innerText}`,                   
-                    type: "POST",
-                    data: {
-                        'id' : document.getElementById('userId').innerText,
-                        'username' : $('#username').val(),
-                        'firstName' : $('#firstName').val(),
-                        'lastName' : $('#lastName').val(),
-                        'isAdmin' : $('#isAdmin').val()
 
-                    },                    
-                    success: function (result){
+                }).done(function (e) {
+                    document.getElementById("submitbtn2").addEventListener('click', function (e) {
 
-                        document.getElementById('editTbl').innerHTML = result + " Reloading now";
-                        setTimeout(() => window.location.reload(), 1800);
-                    }
-            })
-        })
+                        e.preventDefault();
+                        $.ajax({
+                            url: `http://localhost:4000/edit/${document.getElementById('userId').innerText}`,
+                            type: "POST",
+                            data: {
+                                'id': document.getElementById('userId').innerText,
+                                'username': $('#username').val(),
+                                'firstName': $('#firstName').val(),
+                                'lastName': $('#lastName').val(),
+                                'isAdmin': $('#isAdmin').val()
+
+                            },
+                            success: function (result) {
+
+                                document.getElementById('editTbl').innerHTML = result + " Reloading now";
+                                setTimeout(() => window.location.reload(), 1800);
+                            }
+                        })
+                    })
                 })
 
-                
+
             })
         });
         var el = document.getElementsByName("deleteBtn");
@@ -277,7 +274,7 @@
                 console.log(e)
                 $.ajax({
                     url: "http://localhost:4000/delete/" + e.target.id.split('_')[1],
-                    type: "DELETE",                    
+                    type: "DELETE",
                     success: function (result) {
                         document.getElementById('editTbl').innerHTML = result + " Reloading now";
                         setTimeout(() => window.location.reload(), 1800);
@@ -285,8 +282,92 @@
                 })
             })
         })
+        var el = document.getElementById('logoutBtn');
+        if(el != null){
+            el.addEventListener('click', (e) => {
+            e.preventDefault();
+            $.ajax({
+
+                url: "http://localhost:4000/",
+                type: "GET",
+                success: function (result) {
+                    window.location.replace("/")
+                }
+            })
+        })       
+
+        }
+
+        document.getElementById('signupBtn').addEventListener('click', (e)=>{
+                     
+            document.getElementById('mainForm').innerHTML = "";
+            $("#contentwrap").html(`           
+            <span id="loginTitle"><strong>Sign up</strong></span>
+                            <div class="input-group mt-5">
+                                
+                                <input type="text" id="_username" class="form-control" placeholder="Username" required>
+                            </div>
 
 
+                            <div class="input-group mt-3">
+                                
+                                <input type="password" id="_password" class="form-control" placeholder="Password"
+                                    required>
+                            </div>
+                            
+                            <div class="input-group mt-3">
+                               
+                                <input type="text" id="_firstName" class="form-control" placeholder="First Name"
+                                    required>
+                            </div>
+                            <div class="input-group mt-3">
+                                
+                                <input type="text" id="_lastName" class="form-control" placeholder="Last Name"
+                                    required>
+                            </div>
+                            
+                                                     
+                            `)
+            
+
+                            e.target.id = "signupnow";
+
+                            document.getElementById('signupnow').addEventListener('click',(e)=>{
+                                e.preventDefault();
+                               console.log($('#_FirstName').val())
+                                $.ajax({
+                            url: `http://localhost:4000/signup`,
+                            type: "POST",                            
+                            data: {
+                                
+                                'username': $('#_username').val(),
+                                'firstName': $('#_firstName').val(),
+                                'lastName': $('#_lastName').val(),
+                                'password': $('#_password').val()
+
+                            },
+                            success: function (result) {
+
+                                document.getElementById('editTbl').innerHTML = result + " Reloading now";
+                                setTimeout(() => window.location.replace('/'), 1800);
+                            }
+                        })
+
+
+
+
+
+
+
+                            })
+
+
+
+
+
+
+
+        })
 
 
 
