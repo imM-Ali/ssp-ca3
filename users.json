@@ -5,7 +5,7 @@
       "first_Name" : "CCT College",
       "last_Name" : "Dublin",
       "userName" : "cct",
-      "password" : "Admin2!",
+      "password" : "Burning2!",
       "addresses":[
           {
               "Id" : "1",
@@ -24,7 +24,7 @@
       "first_Name" : "Ali",
       "last_Name" : "Shahzaib",
       "userName" : "Ali20",
-      "password" : "Admin2!",
+      "password" : "Burning2!",
       "addresses":[
         {
             "Id" : "1",
@@ -42,7 +42,7 @@
         "first_Name" : "John",
         "last_Name" : "Stephens",
         "userName" : "JS",
-        "password" : "John2!",
+        "password" : "Burning2!",
         "addresses":[
             {
                 "Id" : "1",
@@ -54,4 +54,5 @@
           }
         ]
       }
+      
   ]

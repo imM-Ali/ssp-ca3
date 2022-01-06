@@ -59,9 +59,14 @@
         margin-top: 15%;
     }
 
-    .row {
-        width: 100vw;
-    }
+   .row{
+       width: 100vw;
+   }
+
+   #contentwrap{
+       max-width: 55%;
+       margin: auto;
+   }
 </style>
 
 <body>
@@ -70,14 +75,13 @@
         <nav>
             <img src="images/logo.png">
         </nav>
-        <div class="row mt-5">
-            <div class="col-2">
-
-            </div>
-            <div class="col-8 content">
+        <div class="row mt-5">           
+            
+            <div class="col content">
                 <div class="wrap">
                     <div id="contentwrap">
                         <form id="mainForm" action="/welcome" method="POST">
+                            <!-- if a user variable of none was passed by the node js server, that means no matching user was found, so it stays on the login section -->
                             <% if(locals.user=="none" ){ %>
                                 <span id="loginTitle"><strong>Log in</strong></span>
                                 <div class="input-group mt-5">
@@ -109,9 +113,10 @@
                                         required>
                                 </div>
                                 <button id="loginBtn" class="btn btn-primary mt-4" type="submit">Log in</button>
-
+                                <!--Once a user value is passed by the server, the following is displayed-->
                                 <% } else { %>
                                     <span id="loginTitle"><strong>Welcome! How are you today <%=user%> ?</strong></span>
+                                    <!--If the user is an admin, he can edit/delete the records aswell-->
                                     <% if(locals.userType==1){ %>
                                         <table class="table">
                                             <thead>
@@ -124,6 +129,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <!--loops through the list of users sent by the node router-->
                                                 <% for(var i=0; i < dbUsers.length; i++) { %>
                                                     <tr>
                                                         <td id="userid">
@@ -153,9 +159,49 @@
                                         </table>
                                         <button type="button" id="logoutBtn" class="btn btn-secondary">Log out</button>
 
-
+                                        <!--If it is a non-privilidged user, he can only see the users list, he cannot edit or delete them-->
                                         <% } else { %>
-                                            //do something if normal user
+
+                                            <div class="row">                                                
+                                                <div class="col-12">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Id</th>
+                                                                <th scope="col">First</th>
+                                                                <th scope="col">Last</th>
+                                                                <th scope="col">Username</th>
+                                                               
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <!--displays the record found in the local JSON file-->
+                                                            <% for(var i=0; i < jsUsers.length; i++) { %>
+                                                                <tr>
+                                                                    <td id="jsuserid">
+                                                                        <%= jsUsers[i].Id %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= jsUsers[i].first_Name %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= jsUsers[i].last_Name %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= jsUsers[i].userName %>
+                                                                    </td>
+                                                                    
+                                                                </tr>
+                                                                <% } %>
+                                                        </tbody>
+                                                    </table>
+                                                    <button type="button" id="logoutBtn" class="btn btn-secondary">Log out</button>
+                                                </div>
+
+                                            </div>
+
+
+                                            
                                             <% } %>
 
 
@@ -167,21 +213,20 @@
 
                         </form>
                     </div>
-                    <button style="display: <%=signupBtnVisibility %>" id="signupBtn"
+                    <button style=`display: < %=signupBtnVisibility %>` id="signupBtn"
                         class="btn btn-primary mt-4 ml-2">Sign up</button>
 
                 </div>
 
             </div>
         </div>
+        <!--Initially empty but we will fill it up once an edit button is clicked on a record-->
         <div class="row">
             <div id="editTbl" class="col-8 mt-5">
 
             </div>
         </div>
-        <div class="col-2">
-
-        </div>
+        
 
     </div>
 
@@ -193,19 +238,9 @@
 
     $(document).ready(function () {
 
-
-
-
-
-
-
-
-
-
-
-
         var el = document.getElementsByName("editBtn");
         el.forEach(element => {
+            //when the edit button is clicked, we will send ajax request to node to get results, then display in the empty div we had before
             element.addEventListener('click', function (e) {
                 $.ajax({
                     url: "http://localhost:4000/edit/" + e.target.id.split('_')[1],
@@ -213,7 +248,7 @@
                     dataType: 'json',
                     success: function (result) {
 
-
+                        //the get request was sent to the router to get the saved values and place them as placeholders
                         var tbd = `<form  class="mt-2 mb-2">
                         
                             <span id="loginTitle"><strong>Edit</strong></span>
@@ -252,7 +287,7 @@
 
                 }).done(function (e) {
                     document.getElementById("submitbtn2").addEventListener('click', function (e) {
-
+                        //when the submit button is pressed, an ajax POST request goes to the server with all the data binded to its body
                         e.preventDefault();
                         $.ajax({
                             url: `http://localhost:4000/edit/${document.getElementById('userId').innerText}`,
@@ -266,7 +301,7 @@
 
                             },
                             success: function (result) {
-
+                                //as soon as the server handles everything successfully, page reloads to display the new changes
                                 document.getElementById('editTbl').innerHTML = result + " Reloading now";
                                 setTimeout(() => window.location.reload(), 1800);
                             }
@@ -306,7 +341,7 @@
             })
 
         }
-
+// when the signup button is pressed, the main form dissappears as it is a single page application, and the html transforms to a new form
         document.getElementById('signupBtn').addEventListener('click', (e) => {
 
             document.getElementById('mainForm').innerHTML = "";
@@ -338,12 +373,11 @@
                                                      
                             `)
 
-
+//using the same button for different purpose by changing its ID
             e.target.id = "signupnow";
-
+//sends a POST request to the signup route with the data filled by the user
             document.getElementById('signupnow').addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log($('#_FirstName').val())
+                e.preventDefault();                
                 $.ajax({
                     url: `http://localhost:4000/signup`,
                     type: "POST",

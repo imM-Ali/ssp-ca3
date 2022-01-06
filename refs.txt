@@ -1,0 +1,10 @@
+https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
+https://www.tutsmake.com/node-js-get-and-send-data-from-ajax-request-example/
+https://stackoverflow.com/questions/20941160/javascript-document-getelementbyid-with-onclick
+https://shouts.dev/nodejs-simple-crud-with-expressjs-and-mysql
+https://getbootstrap.com/docs/4.0/components/modal/
+https://stackoverflow.com/questions/26016562/error-typeerror-dialog-is-not-a-function
+https://stackoverflow.com/questions/24400845/refreshing-a-page-after-certain-delay-in-jquery
+https://stackoverflow.com/questions/27976446/html-password-regular-expression-validation/27976676
+https://kb.iu.edu/d/apnn
+

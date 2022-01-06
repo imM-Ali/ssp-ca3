@@ -2,8 +2,10 @@ import express from "express";
 import bodyParser from 'body-parser';
 import module from 'path';
 import mysql from 'mysql';
-
-
+import { readFile } from 'fs/promises';
+import fs from 'fs';
+let uniqueId = Math.ceil(Math.random() * 10000);
+let jsonData = JSON.parse(await readFile(new URL('./users.json', import.meta.url)));
 
 
 const __dirname = module.resolve();
@@ -82,6 +84,7 @@ app.post('/welcome', function (req, res) {
                     userType: result[0].userType,
                     userId: result[0].Id,
                     'dbUsers': results,
+                    'jsUsers': jsonData,
                     'signupBtnVisibility': "none"
                 })
 
@@ -89,8 +92,10 @@ app.post('/welcome', function (req, res) {
 
 
         } else {
+            //if matching user not found, re-render login
             res.render("index", {
-                user: "none"
+                user: "none",
+                'signupBtnVisibility': "none"
             })
         }
 
@@ -109,7 +114,7 @@ app.get('/edit/(:id)', function (req, res) {
         if (err) throw err
         // if book found
         else {
-
+            //sending matching user without rendering the whole page
             res.send({
                 user: rows[0].userName,
                 Id: foundId,
@@ -122,7 +127,7 @@ app.get('/edit/(:id)', function (req, res) {
 
 //save one user from the edit form
 app.post('/edit/(:id)', function (req, res) {
-
+    //gets the input from form fields and forwards to sql for storage
     var isadmin;
     if (req.body.isAdmin == "yes") {
         isadmin = 1;
@@ -140,7 +145,7 @@ app.post('/edit/(:id)', function (req, res) {
 
 
 })
-
+//gets the id to be deleted in the parameters
 app.delete('/delete/(:id)', function (req, res) {
 
     db.query(`DELETE FROM user WHERE Id = ${req.params.id}`, function (error) {
@@ -156,9 +161,28 @@ app.delete('/delete/(:id)', function (req, res) {
 
 
 })
-
+//writes the signed up user to mySQl aswell as local JSON FILE
 app.post('/signup', function (req, res) {
-
+    let data = [{
+        Id: uniqueId++,
+        userType: '2',
+        first_Name: req.body.firstName,
+        last_Name: req.body.lastName,
+        userName: req.body.username,
+        password: req.body.password,
+        addresses: [
+            {
+                Id: uniqueId++,
+                location: "House Number" + Math.ceil(Math.random() * 10000)
+            },
+            {
+                Id: uniqueId++,
+                location: "House Number" + Math.ceil(Math.random() * 10000)
+            }
+        ]
+    }];
+    let final = JSON.stringify(data, null, 2);
+    fs.writeFileSync('users.json', final);
     db.query(`INSERT INTO user (userType, first_Name, last_Name, userName, password) VALUES ('2', '${req.body.firstName}', '${req.body.lastName}', '${req.body.username}', '${req.body.password}')`, function (e) {
         if (e) {
             res.send("Sorry we could not add you at this time, try again later")
